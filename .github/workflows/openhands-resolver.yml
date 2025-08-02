@@ -1,0 +1,44 @@
+name: Resolve Issue with OpenHands
+
+on:
+  issues:
+    types: [labeled]
+  pull_request:
+    types: [labeled]
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  resolve:
+    uses: All-Hands-AI/OpenHands/.github/workflows/openhands-resolver.yml@main
+    with:
+      # Set maximum number of iterations for the agent
+      max_iterations: 100
+      # Set the macro to trigger the agent (default: @openhands-agent)
+      macro: "@openhands-agent"
+      # Target branch to create PRs against
+      target_branch: "main"
+      # Type of PR to create (draft or ready)
+      pr_type: "ready"
+      # LLM model to use (OpenRouter Horizon Alpha)
+      LLM_MODEL: "openrouter/horizon-alpha"
+      # Runner to use for the workflow
+      runner: "ubuntu-latest"
+      # OpenRouter API base URL (hardcoded)
+      LLM_BASE_URL: "https://openrouter.ai/api/v1"
+    secrets:
+      # Required: Your OpenRouter API key
+      LLM_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      # Optional: Personal access token for GitHub operations
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      # Optional: Username for the personal access token
+      PAT_USERNAME: ${{ secrets.PAT_USERNAME }}
