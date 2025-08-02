@@ -33,11 +33,11 @@ jobs:
       LLM_MODEL: "openrouter/horizon-alpha"
       # Runner to use for the workflow
       runner: "ubuntu-latest"
-      # OpenRouter API base URL (hardcoded)
-      LLM_BASE_URL: "https://openrouter.ai/api/v1"
     secrets:
       # Required: Your OpenRouter API key
       LLM_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      # OpenRouter API base URL
+      LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
       # Optional: Personal access token for GitHub operations
       PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
       # Optional: Username for the personal access token
